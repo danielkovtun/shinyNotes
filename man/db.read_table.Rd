@@ -23,7 +23,7 @@ Wrapper function to read table from schema, return NA by default if permission e
 }
 \examples{
 con <- connect_sqlite()
-copy_to(con, iris, "df", temporary = FALSE)
+dplyr::copy_to(con, iris, "df", temporary = FALSE)
 db.read_table(con = con, table = 'df')
 
 }
