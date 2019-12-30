@@ -73,7 +73,30 @@
 <div id="shinynotes" class="section level1">
 <div class="page-header"><h1 class="hasAnchor">
 <a href="#shinynotes" class="anchor"></a>shinyNotes</h1></div>
-<p>Shiny module for taking free-form notes and displaying them in a customizable UI</p>
+<p>Shiny module for taking free-form notes and displaying them in a customizable UI.</p>
+<p>The <code>shinyNotes</code> package provides an easy way to incorporate free-form note taking or discussion boards into your shiny application. The package includes a shiny module, <code>shinynotes</code>, that can be included in any shiny application to create a panel containing searchable, editable text broken down by section headers of your choice.</p>
+<div id="installation" class="section level2">
+<h2 class="hasAnchor">
+<a href="#installation" class="anchor"></a>Installation</h2>
+<p>You may install the stable version from CRAN, or the development version using <em>devtools</em>:</p>
+<pre class="{r}"><code># install from CRAN
+install.packages('shinyNotes')
+
+# or the development version, via devtools
+devtools::install_github('danielkovtun/shinyNotes')</code></pre>
+</div>
+<div id="usage" class="section level2">
+<h2 class="hasAnchor">
+<a href="#usage" class="anchor"></a>Usage</h2>
+<div id="demo-shiny-application" class="section level4">
+<h4 class="hasAnchor">
+<a href="#demo-shiny-application" class="anchor"></a>Demo Shiny Application</h4>
+<p>To start off, try running a demo Shiny application included with the package by running:</p>
+<pre class="{r}"><code>library(shinyNotes)
+runExample('demo')</code></pre>
+<p>See the full documentation at <a href="https://danielkovtun.github.io/shinyNotes" class="uri">https://danielkovtun.github.io/shinyNotes</a>.</p>
+</div>
+</div>
 </div>
   </div>
 
