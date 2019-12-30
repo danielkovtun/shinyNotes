@@ -1,0 +1,27 @@
+Package: shinyNotes
+Title: Shiny Module for Taking Free-form Notes
+Version: 0.0.1
+Authors@R: person('Daniel', 'Kovtun', email = 'quantumfusetrader@gmail.com', role = c('cre', 'aut'))
+Description: Shiny module for taking free-form notes and displaying them in a customizable UI.
+    Can be used with a local sqlite database, or a compatible remote database of choice.
+License: MIT + file LICENSE
+Encoding: UTF-8
+LazyData: true
+Imports: 
+    shinyjs,
+    shiny,
+    shinyWidgets,
+    dplyr,
+    DBI,
+    dbplyr,
+    RSQLite,
+    magrittr,
+    stringr
+RoxygenNote: 6.1.1
+URL: https://github.com/danielkovtun/shinyNotes
+BugReports: https://github.com/danielkovtun/shinyNotes/issues
+Suggests: 
+    testthat (>= 2.1.0),
+    knitr,
+    rmarkdown
+VignetteBuilder: knitr
