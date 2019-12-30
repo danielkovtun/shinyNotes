@@ -1,0 +1,490 @@
+default_styles <- function(){
+  return(
+    list("type" = "paragraph",
+         "header" = list("color" = "#4b2c71", style = "font-weight: bold; text-decoration: underline;"),
+         "panel" = list("background" = "#fdfcff", "scrollY" = "scroll", style = "text-align:left; margin-right:1px; max-height: 900px; padding: 4px;"),
+         "paragraph_style" = "margin: 0px 0px 1px;white-space: pre-wrap;",
+         "bullet_style" = "white-space: pre-wrap;",
+         "hr_style" = "margin-top:10px; margin-bottom:10px;"
+         )
+  )
+}
+
+custom_style <- function(style_options){
+  style <- default_styles()
+  if(class(style_options) == "list" && !is.null(names(style_options))){
+    for(name in names(style_options)){
+      if(!is.null(names(style_options[[name]]))){
+        for(nested_name in names(style_options[[name]])){
+          if(nested_name == "scrollY"){
+            scrollY <- ifelse(style_options[[name]][[nested_name]], "scroll", "visible")
+            style[[name]][[nested_name]] <- scrollY
+          } else{
+            style[[name]][[nested_name]] <- style_options[[name]][[nested_name]] 
+          }
+        }
+      } else{
+        style[[name]] <- style_options[[name]]  
+      }
+    }
+  }
+  return(style)
+}
+
+#' @title Shiny Notes module - server function
+#' @name shinynotes
+#'
+#'
+#' @description Server function for the shinynotes module.
+#'
+#'
+#' @param input   Standard \code{shiny} input
+#' @param output  Standard \code{shiny} output
+#' @param session Standard \code{shiny} session
+#' @param group_column Column in table to group and filter notes by
+#' @param selected_group Currently selected group column value
+#' @param group_options Group column row value options
+#' @param category_options Category column row value options
+#' @param table_id Named list with member 'table' and 'schema' referring to a db table containing notes.
+#' @param db_conn database connection cursor
+#' @param style_options Optional named list of css styles to apply to note panel elements.
+#'
+#' @examples
+#' if(interactive()){
+#'   shiny::callModule(
+#'     module = shinynotes, 
+#'     id = "paragraph",
+#'     style_options = shiny::reactive({
+#'     list(
+#'       "type" = "bullets", 
+#'       "header" = list("color" = "#ccc"),
+#'       "panel" = list("scrollY" = TRUE)
+#'       )
+#'     }),
+#'     group_column = "package",
+#'     selected_group = shiny::reactive("shiny"),
+#'     group_options = c("shiny", "shinyWidgets", "dplyr"),
+#'     category_options = c("modules", "noteCrudMod"),
+#'     table_id = list(table = "scroll_demo", schema = "notes"),
+#'     db_conn = connect_sqlite(auto_disconnect = F)
+#'   )
+#' }
+#'
+#' @importFrom shiny reactiveValues observe req reactive isolate observeEvent showModal removeModal renderUI tags HTML NS
+#' @importFrom shiny fluidRow column textInput uiOutput modalDialog div selectizeInput textAreaInput tagList modalButton icon actionButton
+#' @importFrom shinyWidgets panel actionBttn 
+#' @importFrom magrittr "%>%"
+#' @export
+shinynotes <- function(input, output, session, group_column, selected_group, group_options, category_options, table_id, db_conn, style_options = default_styles()) {
+  ### Interactive CRUD panel for general notes ------------------------------------------------
+  ns <- session$ns
+  note_rv <- reactiveValues(notes = NULL, edit_mode = FALSE)
+
+  observe({
+    req(is.null(note_rv$notes))
+    req(db_conn)
+
+    # Free form discussion point notes from a given table and schema
+    note_rv$notes <- db.read_table(db_conn,  schema = table_id$schema, table = table_id$table, collect = T)
+  })
+
+  # reactive notes data filtered on selected group column & rearranged into list named by categories
+  discussion <- reactive({
+    req(selected_group())
+    req(note_rv$notes)
+
+    if (isolate(selected_group()) == "All") {
+      updates <- note_rv$notes
+    }
+    else {
+      selected_grp <- isolate(selected_group())
+      updates <- note_rv$notes %>%
+        dplyr::filter(note_rv$notes[[group_column]] == selected_grp)
+    }
+    if(input$search_text != ""){
+      search_text <- input$search_text
+      update_results <- updates %>%
+        dplyr::filter(stringr::str_detect(update, search_text))
+      category_results <- updates %>%
+        dplyr::filter(stringr::str_detect(category, search_text))
+      updates <- dplyr::bind_rows(update_results, category_results) %>% dplyr::distinct()
+      
+    }
+    
+    updates <- updates %>% dplyr::group_by(category)
+
+    header_col <- 'category'
+    note_col <- 'update'
+
+    if (nrow(updates) > 0) {
+      category_headers <- unique(updates[[header_col]])
+      categorized_notes <- NULL
+      for (category in category_headers) {
+        notes <- updates[[note_col]][which(updates[[header_col]] %in% category)]
+        if (is.na(category)) {
+          categorized_notes[["General"]] <- as.list(notes)
+        }
+        else {
+          categorized_notes[[category]] <- as.list(notes)
+        }
+      }
+      categorized_notes <- categorized_notes[order(names(categorized_notes))]
+      categorized_notes
+    }
+    else {
+      return(NULL)
+    }
+  })
+
+  # Reactive data to track input ids of the text area boxes mapped to static divs
+  discussion_ids <- reactive({
+    area_ids <- unlist(
+      lapply(names(discussion()), function(i)
+        lapply(1:length(discussion()[[i]]), function(j)
+          paste0(i, "_", j)))
+    )
+  })
+
+  
+  # Toggle visibility of note panels between editable and static
+  observe({
+    shinyjs::toggle(id = "note_panel", condition = (note_rv$edit_mode == FALSE))
+    shinyjs::toggle(id = "editable_note_panel", condition = (note_rv$edit_mode == TRUE))
+  })
+
+
+  # Observer for "editing" static divs of discussion notes
+  observeEvent(input$edit_notes, {
+    # Refresh updates notes data before editing - capture potential intermediate changes
+    note_rv$notes <- db.read_table(db_conn, schema = table_id$schema, table = table_id$table, collect = T)
+    note_rv$edit_mode <- TRUE
+    shinyjs::hide(id = "edit_notes")
+    shinyjs::show(id = "save_notes")
+  })
+
+
+  # Confirm changes and save
+  observeEvent(input$save_notes, {
+    shinyjs::hide(id = "save_notes")
+    shinyjs::show(id = "edit_notes")
+
+    notes <- NULL
+    categories <- NULL
+    for (id in discussion_ids()) {
+      id_ <- strsplit(id, "_")[[1]]
+      category <- id_[1]
+      idx <- id_[2]
+      note <- input[[id]]
+      categories <- c(categories, category)
+      notes <- c(notes, note)
+    }
+
+    header_col <- 'category'
+    note_col <- 'update'
+
+    grp <- isolate(selected_group())
+    note_idx <- which(note_rv$notes[[group_column]] %in% grp)
+    note_rv$notes[[note_col]][note_idx] <- notes
+    note_rv$notes[[header_col]][note_idx] <- categories
+
+    # If textbox is empty, delete the div entirely
+    if ("" %in% note_rv$notes[[note_col]][note_idx]) {
+      delete_idx <- which(note_rv$notes[[note_col]] == "")
+      note_rv$notes <- note_rv$notes[-delete_idx, ]
+    }
+
+    # Set the edit flag to false
+    note_rv$edit_mode <- FALSE
+    # Write to DB
+    data <- note_rv$notes
+    db.write_table(db_conn, schema = table_id$schema, table = table_id$table, data = data)
+  })
+
+
+  # Observer for adding new category-specific notes
+  observeEvent(input$add_notes, {
+
+    if(selected_group() == "All"){
+      group_opts <- group_options
+      active_group <- NULL
+    }
+    else{
+      group_opts <- selected_group()
+      active_group <- selected_group()
+    }
+
+    selected_category <- NULL
+
+      if (is.null(discussion())) {
+        if(is.null(category_options)){
+          category_opts <- c("General")
+        } else{
+          category_opts <- category_options  
+        }
+      } else {
+        category_opts <- names(discussion())
+      }
+
+    selected_category <- switch((length(category_opts) > 1) + 1, category_opts, NULL)
+
+    showModal(
+      modalDialog(
+        div(
+          selectizeInput(
+            inputId = ns("new_note_group"),
+            label = paste0(group_column, ":"),
+            choices = group_options,
+            selected = active_group,
+            width = "100%",
+            multiple = TRUE,
+            options = list(maxItems = 1, create = F, placeholder = 'Select a group...')
+          ),
+          selectizeInput(
+            inputId = ns("new_note_category"),
+            label = "Category:",
+            choices = category_opts,
+            selected = selected_category,
+            width = "100%",
+            multiple = TRUE,
+            options = list(maxItems = 1, create = TRUE, placeholder = "Select a category...")
+          ),
+          textAreaInput(
+            inputId = ns("new_note_text"),
+            label = "Discussion/Notes:",
+            width = "190%",
+            value = "", rows = 5, resize = "both"
+          )
+        ),
+        easyClose = F,
+        footer = tagList(
+          modalButton("", icon = icon("times")),
+          actionButton(ns("confirm_note_modal"), label = "", icon = icon("check"))
+        )
+      ) # End modalDialog
+    ) # End showModal
+  })
+
+  # Confim new note submission
+  observeEvent(input$confirm_note_modal, {
+    # Refresh notes data before editing - capture potential intermediate changes
+    note_rv$notes <- db.read_table(db_conn, schema = table_id$schema, table = table_id$table)
+
+    # Append new note
+    group_column_value <- req(isolate(input$new_note_group))
+    category <- req(isolate(input$new_note_category))
+    update <- req(isolate(input$new_note_text))
+
+    new_note <- data.frame(grp = group_column_value, category = category, update = update)
+    colnames(new_note) <- c(group_column, "category", "update")
+
+    note_rv$notes <- rbind(note_rv$notes, new_note)
+
+    # Write to db
+    db.write_table(db_conn, schema = table_id$schema, table = table_id$table, data = new_note, append_only = T)
+    removeModal(session)
+  })
+
+
+  observeEvent(input$hide_notes, {
+    shinyjs::hide(id = "note_updates_div", anim = T, animType = "slide")
+    shinyjs::show(id = "show_notes")
+  })
+
+  observeEvent(input$show_notes, {
+    shinyjs::hide(id = "show_notes")
+    shinyjs::show(id = "note_updates_div", anim = T, animType = "slide")
+  })
+
+  # UI for displaying reactive update notes
+  output$note_panel <- renderUI({
+    req(!is.null(discussion()))
+    
+    style_opts <- custom_style(style_options())
+    
+    if(style_opts$type == "bullets"){
+      update_tags <- lapply(names(discussion()), function(i) {
+        tagList(
+          tags$h5(i, style = paste0("color:", style_opts$header$color, ";", style_opts$header$style)),
+          tags$ul(
+            HTML(paste('<li style=', style_opts$bullet_style, '>', unlist(discussion()[[i]]), "</li>"))
+          )
+        )
+      })
+    }
+    else if(style_opts$type == "paragraph"){
+      update_tags <- lapply(names(discussion()), function(i) {
+        tagList(
+          tags$h5(i, style = paste0("color:", style_opts$header$color, ";", style_opts$header$style)),
+          HTML(paste(
+            '<p style=', style_opts$paragraph_style, '>', unlist(discussion()[[i]]), "</p>",
+            '<hr style=', style_opts$hr_style, '>'
+          ))
+        )
+      }) %>% panel()
+    }
+
+    tagList(
+      fluidRow(
+        column(12,
+               align = "left",
+               div(
+                 update_tags,
+                 style = paste0("background-color:", style_opts$panel$background, ";", "overflow-y:", style_opts$panel$scrollY, ";", style_opts$panel$style)
+               )
+        )
+      )
+    )
+  })
+
+  # Editable note textboxes (textAreaInput)
+  output$editable_note_panel <- renderUI({
+    req(!is.null(discussion()))
+    
+    style_opts <- custom_style(style_options())
+    
+    named_areas <- lapply(names(discussion()), function(i) {
+      lapply(1:length(discussion()[[i]]), function(j) {
+        tagList(
+          textAreaInput(
+            inputId = ns(paste0(i, "_", j)),
+            label = "",
+            value = discussion()[[i]][j], rows = 4, resize = "both"
+          )
+        )
+      })
+    })
+
+    names(named_areas) <- names(discussion())
+    note_tags <- lapply(names(discussion()), function(i) tagList(
+      tags$h5(i, style = paste0("color:", style_opts$header$color, ";", style_opts$header$style)),
+      named_areas[[i]]
+    ))
+
+    tagList(
+      div(
+        panel(note_tags),
+        style = paste0("background-color:", style_opts$panel$background, ";", "overflow-y:", style_opts$panel$scrollY, ";", style_opts$panel$style)
+      ))
+  })
+
+}
+
+
+#' @title Shiny Notes module - UI function
+#'
+#' @name shinynotesUI
+#' @description UI function for the shinynotes module.
+#'
+#' @param id An ID string that will be used to assign the module's namespace.
+#'
+#'
+#' @examples
+#' if(interactive()){
+#'  shinynotesUI(id = 'paragraph')
+#' }
+#' @importFrom shiny tags HTML NS
+#' @importFrom shiny fluidRow column textInput uiOutput div selectizeInput tagList icon actionButton
+#' @importFrom shinyWidgets panel actionBttn 
+#' @importFrom magrittr "%>%"
+#' @export
+shinynotesUI <- function(id) {
+  ns <- NS(id)
+  if(id == "general"){
+    panel_title <- c("")
+  }
+  else{
+    panel_title <- tags$h4(paste0(stringr::str_to_title(id), " Notes"), style = "color: #4b7fa8; font-weight:bold; font-size:16px !important;")
+  }
+  tagList(
+    fluidRow(
+      column(2,
+             align = "center",
+             offset = 7,
+             shinyjs::hidden(
+               actionBttn(
+                 inputId = ns("show_notes"),
+                 label = "",
+                 icon = icon("plus"),
+                 color = "primary",
+                 style = "stretch",
+                 size = "xs",
+                 block = FALSE, no_outline = TRUE
+               ))
+      )
+    ),
+    div(
+      id = ns("note_updates_div"),
+      fluidRow(
+        column(12, align = "center",
+               panel_title
+        )
+      ),
+      fluidRow(
+        column(3,
+               align = "right",
+               textInput(
+                 inputId = ns("search_text"),
+                 label = "",
+                 value = "",
+                 placeholder = "Search...",
+                 width = "100%"           
+               )
+        ),
+        column(2,
+               align = "center",
+               style = "padding-left: 1px; padding-right: 1px;",
+               div(
+                 actionBttn(
+                   inputId = ns("edit_notes"),
+                   label = "",
+                   icon = icon("edit"),
+                   color = "primary",
+                   style = "stretch",
+                   size = "xs",
+                   block = FALSE, no_outline = TRUE
+                 ),
+                 shinyjs::hidden(
+                   actionBttn(
+                     inputId = ns("save_notes"),
+                     label = "",
+                     icon = icon("save"),
+                     color = "primary",
+                     style = "stretch",
+                     size = "xs",
+                     block = FALSE, no_outline = TRUE
+                   )
+                 )
+               )
+        ),
+        column(2,
+               align = "center",
+               style = "padding-left: 1px; padding-right: 1px;",
+               actionBttn(
+                 inputId = ns("add_notes"),
+                 label = "",
+                 icon = icon("plus-square"),
+                 color = "primary",
+                 style = "stretch",
+                 size = "xs",
+                 block = FALSE, no_outline = TRUE
+               )
+        ),
+        column(2,
+               align = "center",
+               style = "padding-left: 1px; padding-right: 1px;",
+               actionBttn(
+                 inputId = ns("hide_notes"),
+                 label = "",
+                 icon = icon("minus"),
+                 color = "primary",
+                 style = "stretch",
+                 size = "xs",
+                 block = FALSE, no_outline = TRUE
+               )
+        )
+      ),
+      uiOutput(ns("note_panel")),
+      shinyjs::hidden(uiOutput(ns("editable_note_panel")))
+    )
+  )
+}
