@@ -5,7 +5,7 @@
 \title{Shiny Notes module - server function}
 \usage{
 shinynotes(input, output, session, group_column, selected_group,
-  group_options, category_options, table_id, db_conn,
+  group_options, table_id, db_conn, category_options = NA,
   style_options = default_styles())
 }
 \arguments{
@@ -21,11 +21,11 @@ shinynotes(input, output, session, group_column, selected_group,
 
 \item{group_options}{Group column row value options}
 
-\item{category_options}{Category column row value options}
-
 \item{table_id}{Named list with member 'table' and 'schema' referring to a db table containing notes.}
 
 \item{db_conn}{database connection cursor}
+
+\item{category_options}{Category column row value options. Useful if table is empty. Default is NA (retrieved from data)}
 
 \item{style_options}{Optional named list of css styles to apply to note panel elements.}
 }
@@ -47,7 +47,6 @@ if(interactive()){
     group_column = "package",
     selected_group = shiny::reactive("shiny"),
     group_options = c("shiny", "shinyWidgets", "dplyr"),
-    category_options = c("modules", "noteCrudMod"),
     table_id = list(table = "scroll_demo", schema = "notes"),
     db_conn = connect_sqlite(auto_disconnect = F)
   )
