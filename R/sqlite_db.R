@@ -40,14 +40,14 @@ connect_sqlite <- function(auto_disconnect = TRUE){
 #' @param error_value Error value to return if dbReadTable fails. Default is NA.
 #'
 #' @examples
-#' con <- connect_sqlite()
+#' con <- connect_sqlite(auto_disconnect = FALSE)
 #' dplyr::copy_to(con, iris, "df", temporary = FALSE)
 #' db.read_table(con = con, table = 'df')
 #'
 #' @importFrom magrittr "%>%"
 #' 
 #' @export
-db.read_table <- function(con, table, schema = NA, collect = TRUE, error_value = NA) {
+db.read_table <- function(con, table, schema=NA, collect=TRUE, error_value=NA) {
   cat(file = stderr(), "Reading table ", table, "\n")
   res <- tryCatch({
     if("SQLiteConnection" %in% class(con)){
@@ -92,10 +92,9 @@ db.read_table <- function(con, table, schema = NA, collect = TRUE, error_value =
 #' @param drop_overwrite A boolean specifying whether the operation is DROP and INSERT. This will overwrite any existing field types.
 #'
 #' @examples
-#' connection <- connect_sqlite()
+#' connection <- connect_sqlite(auto_disconnect = FALSE)
 #'
-#' db.write_table(
-#' con = connection, table = 'iris', data = iris)
+#' db.write_table(con = connection, table = 'iris', data = iris)
 #'
 #' @export
 db.write_table <- function(con, data, table, schema = NA, append_only = F, drop_overwrite = NA){
