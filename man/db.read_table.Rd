@@ -22,7 +22,7 @@ db.read_table(con, table, schema = NA, collect = TRUE,
 Wrapper function to read table from schema, return NA by default if permission error (or other).
 }
 \examples{
-con <- connect_sqlite()
+con <- connect_sqlite(auto_disconnect = FALSE)
 dplyr::copy_to(con, iris, "df", temporary = FALSE)
 db.read_table(con = con, table = 'df')
 

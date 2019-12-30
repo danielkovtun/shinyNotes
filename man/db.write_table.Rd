@@ -25,9 +25,8 @@ Default of append_only = F means execute DELETE on table, and update with new da
 Wrapper function to write data to table in schema, return TRUE if successful, FALSE otherwise.
 }
 \examples{
-connection <- connect_sqlite()
+connection <- connect_sqlite(auto_disconnect = FALSE)
 
-db.write_table(
-con = connection, table = 'iris', data = iris)
+db.write_table(con = connection, table = 'iris', data = iris)
 
 }
