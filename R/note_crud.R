@@ -44,7 +44,7 @@ custom_style <- function(style_options){
 #' @param group_column Column in table to group and filter notes by
 #' @param selected_group Currently selected group column value
 #' @param group_options Group column row value options
-#' @param category_options Category column row value options
+#' @param category_options Category column row value options. Useful if table is empty. Default is NA (retrieved from data)
 #' @param table_id Named list with member 'table' and 'schema' referring to a db table containing notes.
 #' @param db_conn database connection cursor
 #' @param style_options Optional named list of css styles to apply to note panel elements.
@@ -64,7 +64,6 @@ custom_style <- function(style_options){
 #'     group_column = "package",
 #'     selected_group = shiny::reactive("shiny"),
 #'     group_options = c("shiny", "shinyWidgets", "dplyr"),
-#'     category_options = c("modules", "noteCrudMod"),
 #'     table_id = list(table = "scroll_demo", schema = "notes"),
 #'     db_conn = connect_sqlite(auto_disconnect = F)
 #'   )
@@ -75,7 +74,7 @@ custom_style <- function(style_options){
 #' @importFrom shinyWidgets panel actionBttn 
 #' @importFrom magrittr "%>%"
 #' @export
-shinynotes <- function(input, output, session, group_column, selected_group, group_options, category_options, table_id, db_conn, style_options = default_styles()) {
+shinynotes <- function(input, output, session, group_column, selected_group, group_options, table_id, db_conn, category_options = NA, style_options = default_styles()) {
   ### Interactive CRUD panel for general notes ------------------------------------------------
   ns <- session$ns
   note_rv <- reactiveValues(notes = NULL, edit_mode = FALSE)
@@ -216,7 +215,7 @@ shinynotes <- function(input, output, session, group_column, selected_group, gro
     selected_category <- NULL
 
       if (is.null(discussion())) {
-        if(is.null(category_options)){
+        if(is.na(category_options)){
           category_opts <- c("General")
         } else{
           category_opts <- category_options  
