@@ -3,7 +3,7 @@ ui <- fixedPage(
   fixedRow(
     sidebarLayout(
       sidebarPanel = sidebarPanel(
-        radioGroupButtons("paragraph_group", label = "Paragraph Group:", 
+        radioGroupButtons("note_group", label = "Note Group:", 
                           choices = c("shiny", "shinyWidgets", "dplyr"), selected = "shiny",
                           status = "primary",
                           justified = T
@@ -32,7 +32,7 @@ ui <- fixedPage(
           width = "100%"
         )
       ),
-      mainPanel = column(8, shinynotesUI('paragraph'))
+      mainPanel = column(8, shinynotesUI('Package'))
     )
   )
 )
