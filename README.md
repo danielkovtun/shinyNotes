@@ -23,4 +23,12 @@ library(shinyNotes)
 runExample('demo')
 ```
 
+#### Editing Notes
+Notes can be directly modified by clicking the edit button and using the generated textAreaInput's. To delete a note, simply remove all text from a textAreaInput and click save.
+![](docs/edit_notes.gif)
+
+#### Adding Text Fields and Sections
+You can add a new note to a section by clicking the "plus" button and selecting an existing category to add a note to. To add a new section header, fill in the inputs provided in the `modalDialog`. 
+![](docs/add_category.gif)
+
 See the full documentation at https://danielkovtun.github.io/shinyNotes. 
