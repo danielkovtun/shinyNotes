@@ -2,7 +2,7 @@ server <- function(input, output, session){
   
   connection<-connect_sqlite(auto_disconnect = F)
   create_schema("notes", connection)
-  db.write_table(connection, schema = "notes", table = "scroll_demo", scroll_notes)
+  db.write_table(connection, schema = "notes", table = "scroll_demo", demo_notes)
   
   callModule(module = shinynotes, 
              id = "Package",
