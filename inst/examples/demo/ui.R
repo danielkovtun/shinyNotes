@@ -49,7 +49,15 @@ ui <- fixedPage(
                    selected = "steelblue",
                    choices = color_opts,
                    options = list(`toggle-palette-more-text` = "Show more")
-                 )
+                 ),
+                 spectrumInput(
+                   inputId = "border_color",
+                   label = "Border color:",
+                   selected = "#deebf7",
+                   choices = color_opts,
+                   options = list(`toggle-palette-more-text` = "Show more")
+                 ),
+                 numericInput("padding", label = "Padding", value = 4, min = 0, max = 100)
           ),
           column(6,
                  noUiSliderInput(
@@ -65,10 +73,19 @@ ui <- fixedPage(
                    selected = "#fdfeff",
                    choices = color_opts,
                    options = list(`toggle-palette-more-text` = "Show more")
-                 )
+                 ),
+                 selectizeInput(
+                   inputId = "border_style",
+                   label = "Border Style",
+                   choices = c("dashed", "dotted", "double", "groove", "hidden", "inherit", "initial", "inset", "none", "outset", "ridge", "solid", "unset"),
+                   selected = "solid",
+                   width = "100%",
+                   multiple = TRUE,
+                   options = list(maxItems = 1, create = F, placeholder = 'Select a style...')
+                 ),
+                 numericInput("border_width", label = "Border Width", value = 2, min = 0, max = 100)
           )
         ),
-        numericInput("padding", label = "Padding", value = 4, min = 0, max = 100),
         selectizeInput(
           inputId = "status",
           label = "Bootstrap Status",

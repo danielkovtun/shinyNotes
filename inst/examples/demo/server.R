@@ -15,7 +15,10 @@ server <- function(input, output, session){
                  "scrollY" = input$overflow_y, 
                  "padding" = paste0(input$padding, "px"),
                  "width" = paste0(input$width, "%"),
-                 "max_height" = paste0(input$height, "px")
+                 "max_height" = paste0(input$height, "px"),
+                 "border_color" = input$border_color,
+                 "border_style" = input$border_style,
+                 "border_width" = paste0(input$border_width, "px")
                  )
              )}),
              group_column = "package",
