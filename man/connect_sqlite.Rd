@@ -2,15 +2,17 @@
 % Please edit documentation in R/sqlite_db.R
 \name{connect_sqlite}
 \alias{connect_sqlite}
-\title{Create a local sqlite connection}
+\title{Connect to an SQLite database}
 \usage{
 connect_sqlite(auto_disconnect = TRUE)
 }
 \arguments{
-\item{auto_disconnect}{Should the connection be automatically closed when the src is deleted? Set to TRUE if you initialize the connection the call to src_dbi(). Pass NA to auto-disconnect but print a message when this happens. cursor}
+\item{auto_disconnect}{Should the connection be automatically closed when the \code{src} is deleted? 
+Set to \code{TRUE} if you initialize the connection the call to \code{src_dbi()}. 
+Pass \code{NA} to auto-disconnect but print a message when this happens.}
 }
 \description{
-Wrapper function to return a sqlite connection cursor for local development.
+Wrapper function to return a \code{\link[=RSQLite]{SQLiteConnection}} object for local development.
 }
 \examples{
 connect_sqlite()

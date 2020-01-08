@@ -2,7 +2,7 @@
 % Please edit documentation in R/note_crud.R
 \name{shinynotesUI}
 \alias{shinynotesUI}
-\title{Shiny Notes module - UI function}
+\title{Shiny notes module - UI function}
 \usage{
 shinynotesUI(id)
 }
@@ -10,7 +10,7 @@ shinynotesUI(id)
 \item{id}{An ID string that will be used to assign the module's namespace.}
 }
 \description{
-UI function for the shinynotes module.
+UI function for the \code{shinynotes} module.
 }
 \examples{
 if(interactive()){

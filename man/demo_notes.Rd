@@ -3,8 +3,8 @@
 \docType{data}
 \name{demo_notes}
 \alias{demo_notes}
-\title{Demo notes for testing shinyNote module.}
-\format{A tibble with 274 rows and 3 variables:
+\title{Demo notes for testing \code{shinynote} module.}
+\format{A \code{tibble} with 274 rows and 3 variables:
 \describe{
   \item{package}{package title, character class}
   \item{category}{function name, character class}
@@ -12,13 +12,17 @@
   ...
 }}
 \source{
-\href{https://cran.r-project.org/web/packages/available_packages_by_name.html}{CRAN Package Help Pages}
+\href{https://CRAN.R-project.org/package=shiny}{shiny help pages}
+
+\href{https://CRAN.R-project.org/package=shinyWidgets}{shinyWidgets help pages}
+
+\href{https://CRAN.R-project.org/package=dplyr}{dplyr help pages}
 }
 \usage{
 demo_notes
 }
 \description{
-A dataset containing package functions and their titles for the shiny, shinyWidgets and dplyr packages.
-Formatted in a structure compatible with the shinyNote's shiny module.
+A dataset containing package functions and their titles for the \code{shiny}, \code{shinyWidgets} and \code{dplyr} packages.
+Formatted in a structure compatible with the \code{shinyNotes::shinynotes} module.
 }
 \keyword{datasets}
