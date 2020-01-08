@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Create a local sqlite connection — connect_sqlite • shinyNotes</title>
+<title>Connect to an SQLite database — connect_sqlite • shinyNotes</title>
 
 
 <!-- jquery -->
@@ -35,8 +35,8 @@
 
 
 
-<meta property="og:title" content="Create a local sqlite connection — connect_sqlite" />
-<meta property="og:description" content="Wrapper function to return a sqlite connection cursor for local development." />
+<meta property="og:title" content="Connect to an SQLite database — connect_sqlite" />
+<meta property="og:description" content="Wrapper function to return a SQLiteConnection object for local development." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -82,6 +82,9 @@
   </a>
 </li>
 <li>
+  <a href="../articles/shinyNotes.html">Get started</a>
+</li>
+<li>
   <a href="../reference/index.html">Reference</a>
 </li>
 <li>
@@ -108,13 +111,13 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Create a local sqlite connection</h1>
+    <h1>Connect to an SQLite database</h1>
     <small class="dont-index">Source: <a href='https://github.com/danielkovtun/shinyNotes/blob/master/R/sqlite_db.R'><code>R/sqlite_db.R</code></a></small>
     <div class="hidden name"><code>connect_sqlite.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Wrapper function to return a sqlite connection cursor for local development.</p>
+    <p>Wrapper function to return a <code>SQLiteConnection</code> object for local development.</p>
     </div>
 
     <pre class="usage"><span class='fu'>connect_sqlite</span>(<span class='kw'>auto_disconnect</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
@@ -124,7 +127,9 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>auto_disconnect</th>
-      <td><p>Should the connection be automatically closed when the src is deleted? Set to TRUE if you initialize the connection the call to src_dbi(). Pass NA to auto-disconnect but print a message when this happens. cursor</p></td>
+      <td><p>Should the connection be automatically closed when the <code>src</code> is deleted? 
+Set to <code>TRUE</code> if you initialize the connection the call to <code>src_dbi()</code>. 
+Pass <code>NA</code> to auto-disconnect but print a message when this happens.</p></td>
     </tr>
     </table>
 
