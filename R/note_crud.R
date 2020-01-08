@@ -10,6 +10,10 @@ default_styles <- function(){
            "height" = "100%",
            "padding" = "4px",
            "width" = "100%",
+           "border_width" = "2px",
+           "border_radius" = "4px",
+           "border_style" = "solid",
+           "border_color" = "#f5f5f5",
            style = "text-align:left; margin-right:1px;"),
          "paragraph_style" = "margin: 0px 0px 1px;white-space: pre-wrap;",
          "bullet_style" = "white-space: pre-wrap;",
@@ -155,8 +159,8 @@ shinynotes <- function(input, output, session, group_column, selected_group, gro
           paste0(i, "_", j)))
     )
   })
-
   
+
   # Toggle visibility of note panels between editable and static
   observe({
     shinyjs::toggle(id = "note_panel", condition = (note_rv$edit_mode == FALSE))
@@ -185,6 +189,7 @@ shinynotes <- function(input, output, session, group_column, selected_group, gro
       category <- id_[1]
       idx <- id_[2]
       note <- input[[id]]
+      note <- gsub("\\n", "<br>", note)
       categories <- c(categories, category)
       notes <- c(notes, note)
     }
@@ -349,6 +354,10 @@ shinynotes <- function(input, output, session, group_column, selected_group, gro
                      "height:", style_opts$panel$height, ";",
                      "overflow-y:", style_opts$panel$scrollY, ";",
                      "padding:", style_opts$panel$padding, ";",
+                     "border-color:", style_opts$panel$border_color, " !important;",
+                     "border-width:", style_opts$panel$border_width, " !important;",
+                     "border-style:", style_opts$panel$border_style, " !important;",
+                     "border-radius:", style_opts$panel$border_radius, " !important;",
                      style_opts$panel$style
                      )
                    ),
@@ -371,7 +380,7 @@ shinynotes <- function(input, output, session, group_column, selected_group, gro
           textAreaInput(
             inputId = ns(paste0(i, "_", j)),
             label = "",
-            value = discussion()[[i]][j], rows = 4, resize = "both"
+            value = gsub("<br>", "\n", discussion()[[i]][j]), rows = 4, resize = "both"
           )
         )
       })
@@ -394,6 +403,10 @@ shinynotes <- function(input, output, session, group_column, selected_group, gro
             "height:", style_opts$panel$height, ";",
             "overflow-y:", style_opts$panel$scrollY, ";",
             "padding:", style_opts$panel$padding, ";",
+            "border-color:", style_opts$panel$border_color, " !important;",
+            "border-width:", style_opts$panel$border_width, " !important;",
+            "border-style:", style_opts$panel$border_style, " !important;",
+            "border-radius:", style_opts$panel$border_radius, " !important;",
             style_opts$panel$style)
         ),
         style = paste0("width:", style_opts$panel$width, ";")
