@@ -2,14 +2,21 @@ server <- function(input, output, session){
   
   connection<-connect_sqlite(auto_disconnect = F)
   create_schema("notes", connection)
-  db.write_table(connection, schema = "notes", table = "scroll_demo", shinyNotes::demo_notes)
+  db.write_table(connection, schema = "notes", table = "scroll_demo", scroll_notes)
   
   callModule(module = shinynotes, 
              id = "Package",
              style_options = reactive({list(
                "type" = input$note_style, 
                "header" = list("color" = input$header_color),
-               "panel" = list("background" = input$background_color, "scrollY" = input$overflow_y)
+               "panel" = list(
+                 "status" = input$status,
+                 "background" = input$background_color, 
+                 "scrollY" = input$overflow_y, 
+                 "padding" = paste0(input$padding, "px"),
+                 "width" = paste0(input$width, "%"),
+                 "max_height" = paste0(input$height, "px")
+                 )
              )}),
              group_column = "package",
              selected_group = reactive(input$note_group),
