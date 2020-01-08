@@ -1,7 +1,7 @@
 # shinyNotes
 Shiny module for taking free-form notes and displaying them in a customizable UI.
 
-The `shinyNotes` package is an enterprise-targeted scalable and customizable 'shiny' module providing an easy way to incorporate free-form note taking or discussion boards into your shiny applications.
+The `shinyNotes` package is an enterprise-targeted scalable and customizable `shiny` module providing an easy way to incorporate free-form note taking or discussion boards into your shiny applications.
 
 The package includes a shiny module, `shinynotes`, that can be included in any shiny application to create a panel containing searchable, editable text broken down by section headers of your choice.
 
