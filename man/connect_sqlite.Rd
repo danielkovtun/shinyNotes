@@ -7,12 +7,20 @@
 connect_sqlite(auto_disconnect = TRUE)
 }
 \arguments{
-\item{auto_disconnect}{Should the connection be automatically closed when the \code{src} is deleted? 
-Set to \code{TRUE} if you initialize the connection the call to \code{src_dbi()}. 
-Pass \code{NA} to auto-disconnect but print a message when this happens.}
+\item{auto_disconnect}{Should the connection be automatically closed when the
+\code{src} is deleted? Set to \code{TRUE} if you initialize the connection
+the call to \code{src_dbi()}. Pass \code{NA} to auto-disconnect but print a
+message when this happens.}
+}
+\value{
+Returns an S4 object that inherits from DBIConnection. This object is
+  used to communicate with the database engine. Under the hood,
+  \code{dbConnect()} returns an object of class \code{SQLiteConnection}. See
+  \code{\link[=DBI]{dbConnect()}} for more details.
 }
 \description{
-Wrapper function to return a \code{\link[=RSQLite]{SQLiteConnection}} object for local development.
+Wrapper function to return a
+  \code{\link[=RSQLite]{SQLiteConnection}} object for local development.
 }
 \examples{
 connect_sqlite()

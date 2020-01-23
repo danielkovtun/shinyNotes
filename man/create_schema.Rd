@@ -9,10 +9,15 @@ create_schema(schema, con)
 \arguments{
 \item{schema}{Schema name}
 
-\item{con}{A \code{\link[=RSQLite]{SQLiteConnection-class}} object, produced by \code{\link[=DBI]{dbConnect()}} or \code{shinyNotes::connect_sqlite()}}
+\item{con}{A \code{\link[=RSQLite]{SQLiteConnection-class}} object, produced
+by \code{\link[=DBI]{dbConnect()}} or \code{shinyNotes::connect_sqlite()}}
+}
+\value{
+None. Executes SQL query and returns silently.
 }
 \description{
-Wrapper function to create a new schema in a SQLite database for local development.
+Wrapper function to create a new schema in a SQLite database for
+  local development.
 }
 \examples{
 con <- connect_sqlite()

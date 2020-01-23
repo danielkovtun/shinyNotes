@@ -9,6 +9,11 @@ shinynotesUI(id)
 \arguments{
 \item{id}{An ID string that will be used to assign the module's namespace.}
 }
+\value{
+Note module UI, containing note panel and control buttons. An HTML
+  tag object that can be rendered as HTML using
+  \code{\link[=base]{as.character()}}.
+}
 \description{
 UI function for the \code{shinynotes} module.
 }
@@ -16,4 +21,5 @@ UI function for the \code{shinynotes} module.
 if(interactive()){
  shinynotesUI(id = 'paragraph')
 }
+
 }

@@ -9,6 +9,10 @@ runExample(example)
 \arguments{
 \item{example}{The app to launch}
 }
+\value{
+None. Runs a demo Shiny application. This function normally does not
+  return; interrupt R to stop the application.
+}
 \description{
 Launch a \code{rpredictit} example Shiny app that shows how to
 easily use \code{shinyNotes} in a Shiny app.\cr\cr
