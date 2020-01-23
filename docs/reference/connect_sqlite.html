@@ -36,7 +36,8 @@
 
 
 <meta property="og:title" content="Connect to an SQLite database — connect_sqlite" />
-<meta property="og:description" content="Wrapper function to return a SQLiteConnection object for local development." />
+<meta property="og:description" content="Wrapper function to return a
+  SQLiteConnection object for local development." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -117,7 +118,8 @@
     </div>
 
     <div class="ref-description">
-    <p>Wrapper function to return a <code>SQLiteConnection</code> object for local development.</p>
+    <p>Wrapper function to return a
+  <code>SQLiteConnection</code> object for local development.</p>
     </div>
 
     <pre class="usage"><span class='fu'>connect_sqlite</span>(<span class='kw'>auto_disconnect</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
@@ -127,12 +129,19 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>auto_disconnect</th>
-      <td><p>Should the connection be automatically closed when the <code>src</code> is deleted? 
-Set to <code>TRUE</code> if you initialize the connection the call to <code>src_dbi()</code>. 
-Pass <code>NA</code> to auto-disconnect but print a message when this happens.</p></td>
+      <td><p>Should the connection be automatically closed when the
+<code>src</code> is deleted? Set to <code>TRUE</code> if you initialize the connection
+the call to <code>src_dbi()</code>. Pass <code>NA</code> to auto-disconnect but print a
+message when this happens.</p></td>
     </tr>
     </table>
 
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p>Returns an S4 object that inherits from DBIConnection. This object is
+  used to communicate with the database engine. Under the hood,
+  <code>dbConnect()</code> returns an object of class <code>SQLiteConnection</code>. See
+  <code>dbConnect()</code> for more details.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'>connect_sqlite</span>()</div><div class='output co'>#&gt; &lt;SQLiteConnection&gt;
@@ -144,6 +153,7 @@ Pass <code>NA</code> to auto-disconnect but print a message when this happens.</
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
+      <li><a href="#value">Value</a></li>
       <li><a href="#examples">Examples</a></li>
     </ul>
 

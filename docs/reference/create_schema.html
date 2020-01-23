@@ -36,7 +36,8 @@
 
 
 <meta property="og:title" content="Add schema to a SQLite database — create_schema" />
-<meta property="og:description" content="Wrapper function to create a new schema in a SQLite database for local development." />
+<meta property="og:description" content="Wrapper function to create a new schema in a SQLite database for
+  local development." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -117,7 +118,8 @@
     </div>
 
     <div class="ref-description">
-    <p>Wrapper function to create a new schema in a SQLite database for local development.</p>
+    <p>Wrapper function to create a new schema in a SQLite database for
+  local development.</p>
     </div>
 
     <pre class="usage"><span class='fu'>create_schema</span>(<span class='no'>schema</span>, <span class='no'>con</span>)</pre>
@@ -131,10 +133,14 @@
     </tr>
     <tr>
       <th>con</th>
-      <td><p>A <code>SQLiteConnection-class</code> object, produced by <code>dbConnect()</code> or <code><a href='connect_sqlite.html'>shinyNotes::connect_sqlite()</a></code></p></td>
+      <td><p>A <code>SQLiteConnection-class</code> object, produced
+by <code>dbConnect()</code> or <code><a href='connect_sqlite.html'>shinyNotes::connect_sqlite()</a></code></p></td>
     </tr>
     </table>
 
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p>None. Executes SQL query and returns silently.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='no'>con</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='connect_sqlite.html'>connect_sqlite</a></span>()
@@ -144,6 +150,7 @@
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
+      <li><a href="#value">Value</a></li>
       <li><a href="#examples">Examples</a></li>
     </ul>
 
