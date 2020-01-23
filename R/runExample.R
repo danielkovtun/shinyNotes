@@ -10,6 +10,8 @@ errMsg <- function(x) {
 #' Run without any arguments to see a list of available example apps.
 #'
 #' @param example The app to launch
+#' @return None. Runs a demo Shiny application. This function normally does not
+#'   return; interrupt R to stop the application.
 #' @examples
 #' ## Only run this example in interactive R sessions
 #' if (interactive()) {
@@ -42,5 +44,5 @@ runExample <- function(example) {
                    example, validExamples))
   }
 
-  shiny::runApp(appDir, display.mode = "showcase")
+  shiny::runApp(appDir, display.mode = "showcase", launch.browser = TRUE)
 }
