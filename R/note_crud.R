@@ -44,6 +44,8 @@ custom_style <- function(style_options){
   return(style)
 }
 
+
+
 #' @title Shiny notes module - server function
 #' @name shinynotes
 #'
@@ -136,7 +138,20 @@ shinynotes <- function(input, output, session, group_column, selected_group, gro
     req(db_conn)
 
     # Free form discussion point notes from a given table and schema
-    note_rv$notes <- db.read_table(db_conn,  schema = table_id$schema, table = table_id$table, collect = TRUE)
+    notes <- db.read_table(db_conn,  schema = table_id$schema, table = table_id$table, collect = TRUE)
+    formatted_notes <- sapply(1:length(notes$update), function(x){
+      note <- notes$update[x]
+      note <- markdown_emojis(note)
+      note <- markdown::renderMarkdown(text = note)
+      note <- gsub("</br><pre><code", "<pre><code", note)
+      note <- gsub("</code></pre></br></br>", "</code></pre></br>", note)
+      note <- gsub("</code></pre></br></br>", "</code></pre></br>", note)
+      note <- gsub("(</h\\d+>)(</br></br>)", "\\1</br>", note)
+      note <- gsub("(</br></br>)(<h\\d+>)", "</br>\\2", note)
+      note
+    })
+    notes$update <- formatted_notes
+    note_rv$notes <- notes
   })
 
   # reactive notes data filtered on selected group column & rearranged into list named by categories
@@ -174,6 +189,7 @@ shinynotes <- function(input, output, session, group_column, selected_group, gro
       categorized_notes <- NULL
       for (category in category_headers) {
         notes <- updates[[note_col]][which(updates[[header_col]] %in% category)]
+
         if (is.na(category)) {
           categorized_notes[["General"]] <- as.list(notes)
         }
@@ -188,6 +204,7 @@ shinynotes <- function(input, output, session, group_column, selected_group, gro
       return(NULL)
     }
   })
+  
 
   # Reactive data to track input ids of the text area boxes mapped to static divs
   discussion_ids <- reactive({
@@ -227,7 +244,14 @@ shinynotes <- function(input, output, session, group_column, selected_group, gro
       category <- id_[1]
       idx <- id_[2]
       note <- input[[id]]
-      note <- gsub("\\n", "<br>", note)
+      note <- markdown_emojis(note)
+      note <- markdown::renderMarkdown(text = note)
+      note <- gsub("</br><pre><code", "<pre><code", note)
+      note <- gsub("</code></pre></br></br>", "</code></pre></br>", note)
+      note <- gsub("</code></pre></br></br>", "</code></pre></br>", note)
+      note <- gsub("(</h\\d+>)(</br></br>)", "\\1</br>", note)
+      note <- gsub("(</br></br>)(<h\\d+>)", "</br>\\2", note)
+      
       categories <- c(categories, category)
       notes <- c(notes, note)
     }
@@ -236,7 +260,6 @@ shinynotes <- function(input, output, session, group_column, selected_group, gro
     note_col <- 'update'
 
     grp <- isolate(selected_group())
-    # note_idx <- which(note_rv$notes[[group_column]] %in% grp)
     note_idx <- which(note_rv$notes$category %in% categories)
     note_rv$notes[[note_col]][note_idx] <- notes
     note_rv$notes[[header_col]][note_idx] <- categories
@@ -370,11 +393,11 @@ shinynotes <- function(input, output, session, group_column, selected_group, gro
       update_tags <- lapply(names(discussion()), function(i) {
         tagList(
           tags$h5(i, style = paste0("color:", style_opts$header$color, ";", style_opts$header$style)),
-          HTML(paste(
+          withMathJax(HTML(paste(
             '<p style=', style_opts$paragraph_style, '>', unlist(discussion()[[i]]), "</p>",
             '<hr style=', style_opts$hr_style, '>'
           ))
-        )
+        ))
       })
     }
 
@@ -418,7 +441,7 @@ shinynotes <- function(input, output, session, group_column, selected_group, gro
           textAreaInput(
             inputId = ns(paste0(i, "_", j)),
             label = "",
-            value = gsub("<br>", "\n", discussion()[[i]][j]), rows = 4, resize = "both"
+            value = replace_tag(html_emojis(gsub("<br>", "\n", discussion()[[i]][j]))), rows = 4, resize = "both"
           )
         )
       })

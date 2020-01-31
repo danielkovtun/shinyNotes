@@ -31,4 +31,9 @@ Notes can be directly modified by clicking the edit button and using the generat
 #### Adding Text Fields and Sections
 You can add a new note to a section by clicking the "plus" button and selecting an existing category to add a note to. To add a new section header, fill in the inputs provided in the `modalDialog`. 
 
+#### Custom Text Formatting with Markdown
+A range of markdown text formatting is supported by `shinyNotes`. In addition to vanilla markdown, you can write inline math equations that are rendered with MathJax and even include emojis :exclamation: :astonished:
+
+![](docs/markdown_demo.gif)
+
 See the full documentation at https://danielkovtun.github.io/shinyNotes. 
