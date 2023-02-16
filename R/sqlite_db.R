@@ -80,25 +80,16 @@ connect_sqlite <- function(auto_disconnect = TRUE){
 db.read_table <- function(con, table, schema=NA, collect=TRUE, error_value=NA) {
   message(paste0("Reading table ", table, "\n"))
   res <- tryCatch({
-    if("SQLiteConnection" %in% class(con)){
-      if(is.na(schema)){
-        tbl_qry <- DBI::dbReadTable(con, table)
-      } else{
-        tbl_qry <- DBI::dbReadTable(con, dbplyr::in_schema(schema = schema, table = table)) 
-      }
-      tbl_qry <- dplyr::as.tbl(tbl_qry)
+    if(is.na(schema)){
+      qry <- paste0('SELECT * FROM "', table, '"')
     } else{
-      if(is.na(schema)){
-        qry <- paste0('SELECT * FROM "', table, '"')
-      } else{
-        qry <- paste0('SELECT * FROM "', schema, '".', '"', table, '"')
-      }
-      qry <- dplyr::sql(qry) 
-      tbl_qry <- dplyr::tbl(con, qry)
-      
-      if (collect) {
-        tbl_qry <- tbl_qry %>% dplyr::collect()
-      }
+      qry <- paste0('SELECT * FROM "', schema, '".', '"', table, '"')
+    }
+    qry <- dplyr::sql(qry) 
+    tbl_qry <- dplyr::tbl(con, qry)
+    
+    if (collect) {
+      tbl_qry <- tbl_qry %>% dplyr::collect()
     }
     tbl_qry
   },
@@ -141,20 +132,15 @@ db.read_table <- function(con, table, schema=NA, collect=TRUE, error_value=NA) {
 db.write_table <- function(con, data, table, schema = NA, append_only = FALSE, drop_overwrite = NA){
   ## Add backup read - don't commit DELETE immediately
   if(!is.na(schema)){
-    if("SQLiteConnection" %in% class(con)){
-      qry <- paste0('DELETE FROM "', schema, '.', table, '";') %>% dplyr::sql()
-      table_id <- dbplyr::in_schema(table = table, schema = schema)
-    } else{
-      qry <- paste0('DELETE FROM "', schema, '".', '"', table, '";') %>% dplyr::sql()
-      table_id <- DBI::Id(table = table, schema = schema)
-    }
+    qry <- paste0('DELETE FROM "', schema, '".', '"', table, '";') %>% dplyr::sql()
+    table_id <- DBI::Id(schema = schema, table = table)
   } else{
     qry <- paste0('DELETE FROM "', table, '";') %>% dplyr::sql()
     table_id <- table
   }
 
   res <- tryCatch({
-    table_exists <- dplyr::db_has_table(con,table_id)
+    table_exists <- DBI::dbExistsTable(con, table_id)
     if(!table_exists){
       write_status <- DBI::dbWriteTable(con, table_id, data, overwrite = TRUE)
     } else{
