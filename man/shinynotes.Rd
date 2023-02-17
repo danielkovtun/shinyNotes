@@ -4,9 +4,18 @@
 \alias{shinynotes}
 \title{Shiny notes module - server function}
 \usage{
-shinynotes(input, output, session, group_column, selected_group,
-  group_options, table_id, db_conn, category_options = NA,
-  style_options = default_styles())
+shinynotes(
+  input,
+  output,
+  session,
+  group_column,
+  selected_group,
+  group_options,
+  table_id,
+  db_conn,
+  category_options = NA,
+  style_options = default_styles()
+)
 }
 \arguments{
 \item{input}{Standard \code{shiny} input}

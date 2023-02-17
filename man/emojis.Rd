@@ -4,12 +4,14 @@
 \name{emojis}
 \alias{emojis}
 \title{Demo notes for testing \code{shinynote} module.}
-\format{A named list of length 2 with elements of length 1510:
+\format{
+A named list of length 2 with elements of length 1510:
 \describe{
   \item{name}{emoji name, character class}
   \item{url}{emoji image url, character class}
   ...
-}}
+}
+}
 \source{
 \href{https://api.github.com/emojis}{GitHub emojis API}
 }
