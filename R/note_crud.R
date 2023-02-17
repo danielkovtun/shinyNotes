@@ -25,7 +25,7 @@ default_styles <- function(){
 
 custom_style <- function(style_options){
   style <- default_styles()
-  if(class(style_options) == "list" && !is.null(names(style_options))){
+  if(inherits(style_options, "list") && !is.null(names(style_options))){
     for(name in names(style_options)){
       if(!is.null(names(style_options[[name]]))){
         for(nested_name in names(style_options[[name]])){
@@ -122,11 +122,12 @@ custom_style <- function(style_options){
 #' }
 #'
 #' @importFrom shiny reactiveValues observe req reactive isolate observeEvent
-#'   showModal removeModal renderUI tags HTML NS
+#'   showModal removeModal renderUI tags HTML NS withMathJax
 #' @importFrom shiny fluidRow column textInput uiOutput modalDialog div
 #'   selectizeInput textAreaInput tagList modalButton icon actionButton
 #' @importFrom shinyWidgets panel actionBttn
 #' @importFrom magrittr "%>%"
+#' @importFrom markdown renderMarkdown
 #' @export
 shinynotes <- function(input, output, session, group_column, selected_group, group_options, table_id, db_conn, category_options = NA, style_options = default_styles()) {
   ### Interactive CRUD panel for general notes ------------------------------------------------
