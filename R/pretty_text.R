@@ -1,3 +1,7 @@
+
+#' @importFrom utils globalVariables
+#' @importFrom rlang .data
+utils::globalVariables(c("markdown_notes", "demo_notes", "emojis"))
 markdown_emojis <- function(note){
   emoji_pattern <- "[^\`](:[[a-zA-Z0-9_+-]]+:)"
   start_pattern <- "^(:[[a-zA-Z0-9_+]]+:)"
