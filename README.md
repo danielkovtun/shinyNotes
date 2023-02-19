@@ -40,4 +40,4 @@ A range of markdown text formatting is supported by `shinyNotes`. In addition to
 
 ![](docs/markdown_demo.gif)
 
-See the full documentation at https://danielkovtun.github.io/shinyNotes. 
+See the full documentation at https://danielkovtun.github.io/shinyNotes/. 
