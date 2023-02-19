@@ -5,6 +5,7 @@ This is a resubmission. In this version I have:
 * Changed type checking to use `inherits` rather than equality comparison with `class`. 
 * Saved package data with version 2 to support backwards-compatible serialized object loading.
 * Defined `globalVariables` for exposing exported package data to internal function.
+* Added trailing slashes to all URLs
 
 ## Test environments
 * local aarch64-apple-darwin20 (64-bit), R version 4.2.1 and R-devel
