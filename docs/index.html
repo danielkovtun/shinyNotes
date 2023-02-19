@@ -6,21 +6,23 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Shiny Module for Taking Free-Form Notes • shinyNotes</title>
-<!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/flatly/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous">
-<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="pkgdown.css" rel="stylesheet">
+<!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script><!-- Bootstrap --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script><!-- bootstrap-toc --><link rel="stylesheet" href="bootstrap-toc.css">
+<script src="bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
+<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="pkgdown.css" rel="stylesheet">
 <script src="pkgdown.js"></script><meta property="og:title" content="Shiny Module for Taking Free-Form Notes">
 <meta property="og:description" content="An enterprise-targeted scalable and customizable shiny module providing an easy way to incorporate free-form note taking or discussion boards into applications.
     The package includes a shiny module that can be included in any shiny application to create a panel containing searchable, editable text broken down by section headers.
     Can be used with a local SQLite database, or a compatible remote database of choice.">
-<meta name="twitter:card" content="summary">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
 </head>
-<body>
+<body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-home">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -33,18 +35,12 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">shinyNotes</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.0.2</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
-<li>
-  <a href="index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
 <li>
   <a href="articles/shinyNotes.html">Get started</a>
 </li>
@@ -57,8 +53,8 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/danielkovtun/shinyNotes">
-    <span class="fab fa fab fa-github fa-lg"></span>
+  <a href="https://github.com/danielkovtun/shinyNotes/" class="external-link">
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -74,89 +70,102 @@
 
       </header><div class="row">
   <div class="contents col-md-9">
-<div id="shinynotes" class="section level1">
-<div class="page-header"><h1 class="hasAnchor">
-<a href="#shinynotes" class="anchor"></a>shinyNotes</h1></div>
+<div class="section level1">
+<div class="page-header"><h1 id="shinynotes">shinyNotes<a class="anchor" aria-label="anchor" href="#shinynotes"></a>
+</h1></div>
 <p>Shiny module for taking free-form notes and displaying them in a customizable UI.</p>
 <p>The <code>shinyNotes</code> package is an enterprise-targeted scalable and customizable <code>shiny</code> module providing an easy way to incorporate free-form note taking or discussion boards into your shiny applications.</p>
 <p>The package includes a shiny module, <code>shinynotes</code>, that can be included in any shiny application to create a panel containing searchable, editable text broken down by section headers of your choice.</p>
-<div id="installation" class="section level2">
-<h2 class="hasAnchor">
-<a href="#installation" class="anchor"></a>Installation</h2>
+<div class="section level2">
+<h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
+</h2>
 <p>You may install the stable version from CRAN, or the development version using <code>devtools</code>:</p>
-<pre class="{r}"><code># install from CRAN
-install.packages('shinyNotes')
-
-# or the development version, via devtools
-devtools::install_github('danielkovtun/shinyNotes')</code></pre>
+<pre class="{r}"><code><span><span class="co"># install from CRAN</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">'shinyNotes'</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># or the development version, via devtools</span></span>
+<span><span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">'danielkovtun/shinyNotes'</span><span class="op">)</span></span></code></pre>
 </div>
-<div id="usage" class="section level2">
-<h2 class="hasAnchor">
-<a href="#usage" class="anchor"></a>Usage</h2>
-<div id="demo-shiny-application" class="section level4">
-<h4 class="hasAnchor">
-<a href="#demo-shiny-application" class="anchor"></a>Demo Shiny Application</h4>
+<div class="section level2">
+<h2 id="usage">Usage<a class="anchor" aria-label="anchor" href="#usage"></a>
+</h2>
+<div class="section level4">
+<h4 id="demo-shiny-application">Demo Shiny Application<a class="anchor" aria-label="anchor" href="#demo-shiny-application"></a>
+</h4>
 <p>To start off, try running a demo Shiny application included with the package by running:</p>
-<pre class="{r}"><code>library(shinyNotes)
-runExample('demo')</code></pre>
+<pre class="{r}"><code><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/danielkovtun/shinyNotes" class="external-link">shinyNotes</a></span><span class="op">)</span></span>
+<span><span class="fu"><a href="reference/runExample.html">runExample</a></span><span class="op">(</span><span class="st">'demo'</span><span class="op">)</span></span></code></pre>
 </div>
-<div id="editing-notes" class="section level4">
-<h4 class="hasAnchor">
-<a href="#editing-notes" class="anchor"></a>Editing Notes</h4>
+<div class="section level4">
+<h4 id="editing-notes">Editing Notes<a class="anchor" aria-label="anchor" href="#editing-notes"></a>
+</h4>
 <p>Notes can be directly modified by clicking the edit button and using the generated <code>textAreaInput</code> fields. To delete a note, simply remove all text from a <code>textAreaInput</code> and click save.</p>
 <p><img src="edit_notes.gif"></p>
 </div>
-<div id="adding-text-fields-and-sections" class="section level4">
-<h4 class="hasAnchor">
-<a href="#adding-text-fields-and-sections" class="anchor"></a>Adding Text Fields and Sections</h4>
+<div class="section level4">
+<h4 id="adding-text-fields-and-sections">Adding Text Fields and Sections<a class="anchor" aria-label="anchor" href="#adding-text-fields-and-sections"></a>
+</h4>
 <p>You can add a new note to a section by clicking the “plus” button and selecting an existing category to add a note to. To add a new section header, fill in the inputs provided in the <code>modalDialog</code>.</p>
 <p><img src="add_category.gif"></p>
 </div>
-<div id="custom-text-formatting-with-markdown" class="section level4">
-<h4 class="hasAnchor">
-<a href="#custom-text-formatting-with-markdown" class="anchor"></a>Custom Text Formatting with Markdown</h4>
-<p>A range of markdown text formatting is supported by <code>shinyNotes</code>. In addition to vanilla markdown, you can write inline math equations that are rendered with MathJax and even include emojis ❗ 😲</p>
+<div class="section level4">
+<h4 id="custom-text-formatting-with-markdown">Custom Text Formatting with Markdown<a class="anchor" aria-label="anchor" href="#custom-text-formatting-with-markdown"></a>
+</h4>
+<p>A range of markdown text formatting is supported by <code>shinyNotes</code>. In addition to vanilla markdown, you can write inline math equations that are rendered with MathJax and even include emojis <span class="emoji" data-emoji="exclamation">❗</span> <span class="emoji" data-emoji="astonished">😲</span></p>
 <p><img src="markdown_demo.gif"></p>
-<p>See the full documentation at <a href="https://danielkovtun.github.io/shinyNotes" class="uri">https://danielkovtun.github.io/shinyNotes</a>.</p>
+<p>See the full documentation at <a href="https://danielkovtun.github.io/shinyNotes" class="external-link uri">https://danielkovtun.github.io/shinyNotes</a>.</p>
 </div>
 </div>
 </div>
   </div>
 
-  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
+  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <div class="links">
-<h2>Links</h2>
+<h2 data-toc-skip>Links</h2>
 <ul class="list-unstyled">
-<li>Browse source code at <br><a href="https://github.com/danielkovtun/shinyNotes">https://​github.com/​danielkovtun/​shinyNotes</a>
-</li>
-<li>Report a bug at <br><a href="https://github.com/danielkovtun/shinyNotes/issues">https://​github.com/​danielkovtun/​shinyNotes/​issues</a>
-</li>
+<li><a href="https://cloud.r-project.org/package=shinyNotes" class="external-link">View on CRAN</a></li>
+<li><a href="https://github.com/danielkovtun/shinyNotes/" class="external-link">Browse source code</a></li>
+<li><a href="https://github.com/danielkovtun/shinyNotes/issues" class="external-link">Report a bug</a></li>
 </ul>
 </div>
+
 <div class="license">
-<h2>License</h2>
+<h2 data-toc-skip>License</h2>
 <ul class="list-unstyled">
 <li><a href="LICENSE.html">Full license</a></li>
-<li><small><a href="https://opensource.org/licenses/mit-license.php">MIT</a> + file <a href="LICENSE-text.html">LICENSE</a></small></li>
+<li><small><a href="https://opensource.org/licenses/mit-license.php" class="external-link">MIT</a> + file <a href="LICENSE-text.html">LICENSE</a></small></li>
 </ul>
 </div>
+
+
+<div class="citation">
+<h2 data-toc-skip>Citation</h2>
+<ul class="list-unstyled">
+<li><a href="authors.html#citation">Citing shinyNotes</a></li>
+</ul>
+</div>
+
 <div class="developers">
-<h2>Developers</h2>
+<h2 data-toc-skip>Developers</h2>
 <ul class="list-unstyled">
 <li>Daniel Kovtun <br><small class="roles"> Maintainer, author </small>  </li>
 </ul>
 </div>
+
+
 
   </div>
 </div>
 
 
       <footer><div class="copyright">
-  <p>Developed by Daniel Kovtun.</p>
+  <p></p>
+<p>Developed by Daniel Kovtun.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer>
@@ -164,6 +173,8 @@ runExample('demo')</code></pre>
 
   
 
+
+  
 
   </body>
 </html>
