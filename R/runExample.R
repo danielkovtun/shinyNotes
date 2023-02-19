@@ -43,6 +43,7 @@ runExample <- function(example) {
     errMsg(sprintf("could not find example app `%s`\n%s",
                    example, validExamples))
   }
-
-  shiny::runApp(appDir, display.mode = "showcase", launch.browser = TRUE)
+  if(interactive()){
+    shiny::runApp(appDir, display.mode = "showcase", launch.browser = TRUE)
+  }
 }
