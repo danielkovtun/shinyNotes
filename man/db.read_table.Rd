@@ -5,8 +5,7 @@
 \title{Read remote database tables into data frames with additional
   validation}
 \usage{
-db.read_table(con, table, schema = NA, collect = TRUE,
-  error_value = NA)
+db.read_table(con, table, schema = NA, collect = TRUE, error_value = NA)
 }
 \arguments{
 \item{con}{An object that inherits from

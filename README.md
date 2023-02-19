@@ -36,8 +36,8 @@ You can add a new note to a section by clicking the "plus" button and selecting 
 ![](docs/add_category.gif)
 
 #### Custom Text Formatting with Markdown
-A range of markdown text formatting is supported by `shinyNotes`. In addition to vanilla markdown, you can write inline math equations that are rendered with MathJax and even include emojis :exclamation: :astonished:
+A range of markdown text formatting is supported by `shinyNotes`. In addition to vanilla markdown, you can write inline math equations that are rendered with `MathJax` and even include emojis :exclamation: :astonished:
 
 ![](docs/markdown_demo.gif)
 
-See the full documentation at https://danielkovtun.github.io/shinyNotes. 
+See the full documentation at https://danielkovtun.github.io/shinyNotes/. 

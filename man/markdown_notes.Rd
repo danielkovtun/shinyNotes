@@ -4,13 +4,15 @@
 \name{markdown_notes}
 \alias{markdown_notes}
 \title{Demo notes formatted with markdown for testing \code{shinynote} module.}
-\format{A \code{tibble} with 3 rows and 3 variables:
+\format{
+A \code{tibble} with 3 rows and 3 variables:
 \describe{
   \item{formatting}{text format type, character class}
   \item{category}{type of markdown formatter, character class}
   \item{update}{text with markdown syntax, character class}
   ...
-}}
+}
+}
 \usage{
 markdown_notes
 }

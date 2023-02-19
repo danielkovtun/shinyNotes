@@ -1,6 +1,6 @@
 Package: shinyNotes
 Title: Shiny Module for Taking Free-Form Notes
-Version: 0.0.1
+Version: 0.0.2
 Authors@R: person('Daniel', 'Kovtun', email = 'quantumfusetrader@gmail.com', role = c('cre', 'aut'))
 Description: An enterprise-targeted scalable and customizable 'shiny' module providing an easy way to incorporate free-form note taking or discussion boards into applications.
     The package includes a 'shiny' module that can be included in any 'shiny' application to create a panel containing searchable, editable text broken down by section headers.
@@ -17,8 +17,11 @@ Imports:
     dbplyr,
     RSQLite,
     magrittr,
-    stringr
-RoxygenNote: 6.1.1
+    stringr,
+    markdown,
+    rlang,
+    utils
+RoxygenNote: 7.2.0
 URL: https://github.com/danielkovtun/shinyNotes
 BugReports: https://github.com/danielkovtun/shinyNotes/issues
 Suggests: 

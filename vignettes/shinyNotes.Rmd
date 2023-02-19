@@ -45,4 +45,4 @@ Notes can be directly modified by clicking the edit button and using the generat
 #### Adding Text Fields and Sections
 You can add a new note to a section by clicking the "plus" button and selecting an existing category to add a note to. To add a new section header, fill in the inputs provided in the `modalDialog`. 
 
-See the full documentation at https://danielkovtun.github.io/shinyNotes. 
+See the full documentation at https://danielkovtun.github.io/shinyNotes/. 

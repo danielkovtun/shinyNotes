@@ -4,8 +4,14 @@
 \alias{db.write_table}
 \title{Write data frames to remote database tables with additional validation}
 \usage{
-db.write_table(con, data, table, schema = NA, append_only = FALSE,
-  drop_overwrite = NA)
+db.write_table(
+  con,
+  data,
+  table,
+  schema = NA,
+  append_only = FALSE,
+  drop_overwrite = NA
+)
 }
 \arguments{
 \item{con}{An object that inherits from

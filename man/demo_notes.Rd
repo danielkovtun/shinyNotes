@@ -4,13 +4,15 @@
 \name{demo_notes}
 \alias{demo_notes}
 \title{Demo notes for testing \code{shinynote} module.}
-\format{A \code{tibble} with 274 rows and 3 variables:
+\format{
+A \code{tibble} with 274 rows and 3 variables:
 \describe{
   \item{package}{package title, character class}
   \item{category}{function name, character class}
   \item{update}{function title, character class}
   ...
-}}
+}
+}
 \source{
 \href{https://CRAN.R-project.org/package=shiny}{shiny help pages}
 
