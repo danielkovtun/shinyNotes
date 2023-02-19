@@ -7,7 +7,7 @@ This is a resubmission. In this version I have:
 * Defined `globalVariables` for exposing exported package data to internal function.
 
 ## Test environments
-* local macos-m1-ventura, R version 4.2.1 and R-devel (xnu-8792.41.9~2/RELEASE_ARM64_T6000 arm64)
+* local aarch64-apple-darwin20 (64-bit), R version 4.2.1 and R-devel
 * R-hub Windows Server 2022, R-devel, 64 bit
 * R-hub Ubuntu Linux 20.04.1 LTS, R-release, GCC
 * R-hub Fedora Linux, R-devel, clang, gfortran
